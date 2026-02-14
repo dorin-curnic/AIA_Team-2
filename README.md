@@ -5,19 +5,13 @@ This project benchmarks various sorting algorithms. Currently optimized for **In
 
 ## Building and Running
 
-### 1. Navigate to Source Directory
-All commands must be run from the `AIA_Team-2` source directory:
-```powershell
-cd AIA_Team-2
-```
-
-### 2. Build the Sorter
+### 1. Build the Sorter
 Compile the main program:
 ```powershell
 g++ -o sorter.exe main.cpp insertion_sort.cpp utils.cpp
 ```
 
-### 3. Build the Data Generator
+### 2. Build the Data Generator
 Compile the test data generator:
 ```powershell
 g++ data_generator.cpp -o generator.exe

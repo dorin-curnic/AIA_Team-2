@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 
-// Usage: .\program_name <algorithm_name> <input_file> [output_file/stdout]
+// Usage: .\sorter.exe <algorithm_name> <input_file> [output_file/stdout]
 // Example: .\sorter.exe insertion_sort input_100_random.txt output.txt
 
 int main(int argc, const char *argv[]) {
