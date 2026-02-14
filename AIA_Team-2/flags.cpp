@@ -74,12 +74,12 @@ void printHelp(const char* programName) {
       << "  " << programName << " -h | --help\n"
       << "  " << programName << " -a <alg> -s <N> -i <in.txt> [-o <out.txt> | -c]\n\n"
       << "Options:\n"
-      << "  -a, --sortAlgorithm <alg>   Algorithm name (e.g., merge, quick, ...)\n"
-      << "  -s, --size <N>              Positive integer size\n"
+      << "  -a, --sortAlgorithm <alg>   Algorithm name (e.g., mergeSort, quickSort, ...)\n"
+      << "  -s, --size <N>              Positive integer size (e.g., 100, 100000, ...)\n"
       << "  -i, --inputFile <file>      Input file\n"
       << "  -o, --outputFile <file>     Output file\n"
       << "  -c, --stdout                Print result to stdout\n"
-      << "  -h, --help                  Show this help (must be the only flag)\n\n"
+      << "  -h, --help                  Show this help\n\n"
       << "Example:\n"
       << "  " << programName << " -a merge -s 1000 -i in.txt -o out.txt\n";
 }
