@@ -34,6 +34,9 @@ main
 .DS_Store
 Thumbs.db
 
+# ---- Generated files ----
+.txt
+
 # ---- Logs ----
 *.log
 /.git
