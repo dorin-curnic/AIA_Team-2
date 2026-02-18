@@ -1,0 +1,39 @@
+# =========================
+# C/C++ (GCC)
+# =========================
+
+# ---- Build outputs ----
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+*.out
+*.app
+*.elf
+
+# executable output
+main
+
+# ---- Dependency files (GCC) ----
+*.d
+*.dep
+*.mk
+
+# ---- IDEs / editors ----
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ---- Logs ----
+*.log
+/.git
