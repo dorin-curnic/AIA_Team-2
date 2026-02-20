@@ -48,7 +48,7 @@ for i = 1 to n-1:
 4. **Implementation notes**: The classic shifted replacement is utilized. For $N > 10,000$, empirical benchmarks are skipped due to excessive $O(n^2)$ time delays on unsorted sets.
 5. **Results + interpretation**:
 
-| Size | Random (�s) | Ascending (�s) | Descending (�s) | Half-Sorted (�s) | Mixed (�s) |
+| Size | Random (us) | Ascending (us) | Descending (us) | Half-Sorted (us) | Mixed (us) |
 |---|---|---|---|---|---|
 | 100 | 0 | 0 | 0 | 0 | 0 |
 | 1000 | 1199 | 0 | 2992 | 0 | 536 |
@@ -72,7 +72,7 @@ for gap in gaps_sequence:
 4. **Implementation notes**: Instead of the classic Shell gaps ($n/2$), we implemented Ciura's mathematically optimal gap sequence `[1,4,10,23,57,132,301,701,1750]`, multiplying by $2.25$ for higher gaps to secure optimal empirical runtimes.
 5. **Results + interpretation**:
 
-| Size | Random (�s) | Ascending (�s) | Descending (�s) | Half-Sorted (�s) | Mixed (�s) |
+| Size | Random (us) | Ascending (us) | Descending (us) | Half-Sorted (us) | Mixed (us) |
 |---|---|---|---|---|---|
 | 100 | 0 | 0 | 0 | 0 | 0 |
 | 1000 | 0 | 0 | 0 | 0 | 0 |
@@ -97,7 +97,7 @@ else:
 4. **Implementation notes**: Optimized using a Median-of-Three pivot strategy to heavily mitigate $O(n^2)$ triggers. Small subarray insertion-sort fallback enhances deep recursion hits.
 5. **Results + interpretation**:
 
-| Size | Random (�s) | Ascending (�s) | Descending (�s) | Half-Sorted (�s) | Mixed (�s) |
+| Size | Random (us) | Ascending (us) | Descending (us) | Half-Sorted (us) | Mixed (us) |
 |---|---|---|---|---|---|
 | 100 | 0 | 0 | 0 | 0 | 0 |
 | 1000 | 0 | 0 | 0 | 0 | 0 |
@@ -121,7 +121,7 @@ merge(left_half, right_half)
 4. **Implementation notes**: Optimized to fall back to Insertion Sort on sub-arrays of size $\le 16$, circumventing recursive overhead inside deep bounds. Handled negative indexing inherently out-of-the-box.
 5. **Results + interpretation**:
 
-| Size | Random (�s) | Ascending (�s) | Descending (�s) | Half-Sorted (�s) | Mixed (�s) |
+| Size | Random (us) | Ascending (us) | Descending (us) | Half-Sorted (us) | Mixed (us) |
 |---|---|---|---|---|---|
 | 100 | 0 | 0 | 0 | 0 | 0 |
 | 1000 | 0 | 0 | 0 | 0 | 0 |
@@ -147,7 +147,7 @@ merge Native and Positive into main
 4. **Implementation notes**: Handled negative numbers implicitly by splitting the domain into positives and absolute-value negatives, sorting them utilizing an internal LSD Radix Lambda, then concatenating them reversely.
 5. **Results + interpretation**:
 
-| Size | Random (�s) | Ascending (�s) | Descending (�s) | Half-Sorted (�s) | Mixed (�s) |
+| Size | Random (us) | Ascending (us) | Descending (us) | Half-Sorted (us) | Mixed (us) |
 |---|---|---|---|---|---|
 | 100 | 0 | 0 | 0 | 0 | 0 |
 | 1000 | 0 | 0 | 0 | 0 | 0 |
