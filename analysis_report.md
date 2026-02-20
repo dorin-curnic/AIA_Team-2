@@ -47,7 +47,8 @@ for i = 1 to n-1:
 3. **Complexity**: Best: $O(n)$ | Avg/Worst: $O(n^2)$ | Space: $O(1)$. It is a strictly Stable sort.
 4. **Implementation notes**: The classic shifted replacement is utilized. For $N > 10,000$, empirical benchmarks are skipped due to excessive $O(n^2)$ time delays on unsorted sets.
 5. **Results + interpretation**:
-| Size | Random (µs) | Ascending (µs) | Descending (µs) | Half-Sorted (µs) | Mixed (µs) |
+
+| Size | Random (ï¿½s) | Ascending (ï¿½s) | Descending (ï¿½s) | Half-Sorted (ï¿½s) | Mixed (ï¿½s) |
 |---|---|---|---|---|---|
 | 100 | 0 | 0 | 0 | 0 | 0 |
 | 1000 | 1199 | 0 | 2992 | 0 | 536 |
@@ -70,7 +71,8 @@ for gap in gaps_sequence:
 3. **Complexity**: Best: $O(n \log n)$ | Avg: $O(n^{4/3})$ (Ciura) | Space: $O(1)$. Unstable.
 4. **Implementation notes**: Instead of the classic Shell gaps ($n/2$), we implemented Ciura's mathematically optimal gap sequence `[1,4,10,23,57,132,301,701,1750]`, multiplying by $2.25$ for higher gaps to secure optimal empirical runtimes.
 5. **Results + interpretation**:
-| Size | Random (µs) | Ascending (µs) | Descending (µs) | Half-Sorted (µs) | Mixed (µs) |
+
+| Size | Random (ï¿½s) | Ascending (ï¿½s) | Descending (ï¿½s) | Half-Sorted (ï¿½s) | Mixed (ï¿½s) |
 |---|---|---|---|---|---|
 | 100 | 0 | 0 | 0 | 0 | 0 |
 | 1000 | 0 | 0 | 0 | 0 | 0 |
@@ -94,7 +96,8 @@ else:
 3. **Complexity**: Best/Avg/Worst: $O(n \log n)$ | Space: $O(\log n)$. Unstable.
 4. **Implementation notes**: Optimized using a Median-of-Three pivot strategy to heavily mitigate $O(n^2)$ triggers. Small subarray insertion-sort fallback enhances deep recursion hits.
 5. **Results + interpretation**:
-| Size | Random (µs) | Ascending (µs) | Descending (µs) | Half-Sorted (µs) | Mixed (µs) |
+
+| Size | Random (ï¿½s) | Ascending (ï¿½s) | Descending (ï¿½s) | Half-Sorted (ï¿½s) | Mixed (ï¿½s) |
 |---|---|---|---|---|---|
 | 100 | 0 | 0 | 0 | 0 | 0 |
 | 1000 | 0 | 0 | 0 | 0 | 0 |
@@ -117,7 +120,8 @@ merge(left_half, right_half)
 3. **Complexity**: Best/Avg/Worst: $O(n \log n)$ | Space: $O(n)$. Stable.
 4. **Implementation notes**: Optimized to fall back to Insertion Sort on sub-arrays of size $\le 16$, circumventing recursive overhead inside deep bounds. Handled negative indexing inherently out-of-the-box.
 5. **Results + interpretation**:
-| Size | Random (µs) | Ascending (µs) | Descending (µs) | Half-Sorted (µs) | Mixed (µs) |
+
+| Size | Random (ï¿½s) | Ascending (ï¿½s) | Descending (ï¿½s) | Half-Sorted (ï¿½s) | Mixed (ï¿½s) |
 |---|---|---|---|---|---|
 | 100 | 0 | 0 | 0 | 0 | 0 |
 | 1000 | 0 | 0 | 0 | 0 | 0 |
@@ -142,7 +146,8 @@ merge Native and Positive into main
 3. **Complexity**: Best/Avg/Worst: $O(d \cdot (n + k))$ where $d=4$ (bytes) | Space: $O(n)$. Stable.
 4. **Implementation notes**: Handled negative numbers implicitly by splitting the domain into positives and absolute-value negatives, sorting them utilizing an internal LSD Radix Lambda, then concatenating them reversely.
 5. **Results + interpretation**:
-| Size | Random (µs) | Ascending (µs) | Descending (µs) | Half-Sorted (µs) | Mixed (µs) |
+
+| Size | Random (ï¿½s) | Ascending (ï¿½s) | Descending (ï¿½s) | Half-Sorted (ï¿½s) | Mixed (ï¿½s) |
 |---|---|---|---|---|---|
 | 100 | 0 | 0 | 0 | 0 | 0 |
 | 1000 | 0 | 0 | 0 | 0 | 0 |
