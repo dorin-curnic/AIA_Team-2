@@ -1,14 +1,27 @@
 # Sorting Algorithm Analysis
 
 ## Overview
-This project benchmarks various sorting algorithms. Currently optimized for **Insertion Sort** (100 elements).
+This project benchmarks and empirically compares five distinct sorting algorithms across various dataset sizes and topologies. It includes customized optimizations for handling integer edge cases, negative numbers, and specific dataset sizes.
+
+## Implemented Algorithms
+1. **Insertion Sort**: Fast for small datasets ($N \le 16$).
+2. **Shell Sort**: Optimized using Ciura's geometric gap sequence.
+3. **Intro Sort**: Median-of-Three pivot strategy with $O(n \log n)$ tight bounds.
+4. **Merge Sort**: Stable sort featuring an Insertion Sort fallback sequence.
+5. **Radix Sort**: Linear time capabilities separated for negative integer domains.
+
+## Directory Structure
+- `AIA_Team-2/`: Source code for the core testing infrastructure algorithms.
+- `AIA_Team-2/data/`: Generated dataset permutations.
+- `analysis_report.md`: The finalized empirical results and analysis.
 
 ## Building and Running
 
 ### 1. Build the Sorter
-Compile the main program:
+Compile the main program and all dependencies together:
 ```powershell
-g++ -o sorter.exe main.cpp insertion_sort.cpp utils.cpp
+cd AIA_Team-2
+g++ main.cpp flags.cpp utils.cpp insertion_sort.cpp shell_sort.cpp introsort.cpp merge_sort.cpp radix.cpp -o sorter.exe -lpsapi
 ```
 
 ### 2. Build the Data Generator
@@ -19,36 +32,66 @@ g++ data_generator.cpp -o generator.exe
 
 ## Usage
 
+**Important:** Before running any executables, ensure you are in the correct directory:
+```powershell
+cd AIA_Team-2
+```
+
 ### 1. Generate Data
-Run the generator to create test files (input_*.txt):
+Run the generator to securely create test files inside the `data/` directory (Sizes: 100 to 1M; Types: random, asc, desc, half-sorted, mixed):
 ```powershell
 .\generator.exe
 ```
 
 ### 2. Run Sorter
-Run the compiled sorter with the following syntax:
+Run the compiled sorter exploiting the flag-based CLI syntax:
 ```powershell
-.\sorter.exe <algorithm_name> <input_file> [output_file]
+.\sorter.exe -a <algorithm> -s <size> -i <input_file> [-o <output_file> | -c]
 ```
 
-- `algorithm_name`: Currently supports `insertion_sort`.
-- `input_file`: Path to the input `.txt` file (e.g., `input_100_random.txt`).
-- `output_file`: (Optional) Path to save the sorted output. Use `stdout` to print to console.
+**Flags:**
+- `-a, --sortAlgorithm <alg>` : Algorithm choice (`insertion`, `shell`, `intro`, `merge`, `radix`).
+- `-s, --size <N>`            : Positive integer size (e.g., `100`, `100000`).
+- `-i, --inputFile <file>`    : Input file path (automatically resolves inside `data/`).
+- `-o, --outputFile <file>`   : Optional. Destination to write the sorted array.
+- `-c, --stdout`              : Optional. Outputs the sorted array directly to the console.
+- `-h, --help`                : Shows program help.
 
 **Examples:**
 
-Sort to a file:
+Compute and print the metrics for a Mixed 10,000 array using Intro Sort, outputting array to a file:
 ```powershell
-.\sorter.exe insertion_sort input_100_random.txt output.txt
+.\sorter.exe -a intro -s 10000 -i input_10000_mixed.txt -o output.txt
 ```
 
-Sort and print to console:
+Compute metrics and print output to console:
 ```powershell
-.\sorter.exe insertion_sort input_100_random.txt stdout
+.\sorter.exe -a radix -s 1000 -i input_1000_random.txt -c
 ```
 
 ## Algorithms
-### Insertion Sort
-- **Best for**: Small datasets (~100 elements).
-- **Time Complexity**: O(n^2).
-- **Space Complexity**: O(1).
+
+### 1. Insertion Sort
+- **Mechanic**: Builds a sorted array one element at a time by shifting items.
+- **Best Use Case**: Very small datasets ($N \le 16$) or arrays that are already mostly sorted natively.
+- **Complexity**: Time $O(N^2)$ Avg/Worst | Space $O(1)$ | Stable.
+
+### 2. Shell Sort
+- **Mechanic**: An extension of Insertion Sort that swaps distant elements across specific "gaps", reducing the gap iteratively. 
+- **Best Use Case**: Medium-sized arrays where recursion overhead is unwanted.
+- **Complexity**: Time $O(N^{4/3})$ (with Ciura gap sequence) | Space $O(1)$ | Unstable.
+
+### 3. Intro Sort
+- **Mechanic**: A hybrid sorting algorithm starting with Quick Sort and switching to Heap Sort when recursion depth exceeds $2 \log N$.
+- **Best Use Case**: General-purpose comparative algorithm; excellent for purely random large datasets.
+- **Complexity**: Time $O(N \log N)$ Best/Worst/Avg | Space $O(\log N)$ | Unstable.
+
+### 4. Merge Sort
+- **Mechanic**: Divides the array into halves, recursively sorts them, and merges them securely. Employs an Insertion Sort fallback for sub-arrays $\le 16$.
+- **Best Use Case**: When strict stability and thoroughly predictable $O(N \log N)$ bounds are required across any topology.
+- **Complexity**: Time $O(N \log N)$ Best/Worst/Avg | Space $O(N)$ | Stable.
+
+### 5. Radix Sort
+- **Mechanic**: Non-comparative integer sort grouping by byte values. Splits positives/negatives to handle edge constraints correctly natively.
+- **Best Use Case**: Very large datasets strictly bound to defined integer limits (e.g., millions of 32-bit sequences).
+- **Complexity**: Time $O(d \cdot (N + K))$ | Space $O(N)$ | Stable.

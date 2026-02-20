@@ -6,7 +6,15 @@
 //
 
 #include "flags.hpp"
+#include "utils.hpp"
+#include "insertion_sort.hpp"
+#include "shell_sort.hpp"
+#include "introsort.hpp"
+#include "merge_sort.hpp"
+#include "radix.hpp"
+#include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -15,7 +23,13 @@ int main(int argc, const char* argv[]) {
   int flagsReturnCode = parseFlags(argc, argv, flags);
 
   if (flagsReturnCode == 1) {
-    printHelp(argv[0]);
+    // Extract base filename from argv[0] for cleaner help output
+    std::string programName = argv[0];
+    size_t lastSlash = programName.find_last_of("/\\");
+    if (lastSlash != std::string::npos) {
+      programName = programName.substr(lastSlash + 1);
+    }
+    printHelp(programName.c_str());
     return 0;
   }
 
@@ -23,39 +37,68 @@ int main(int argc, const char* argv[]) {
     return flagsReturnCode;
   }
 
-  // Get the input file
-  // readInputFile(flags.inputFile);
+  // track overall time
+  long long startTotal = getCurrentTimeMicros();
 
-  /*
-   * There you can call your sort functions
-   */
-  switch (flags.size) {
-    case 100:
-      // insertionSort();
-      break;
-    case 1000:
-      // shellSort();
-      break;
-    case 10000:
-      // introSort();
-      break;
-    case 100000:
-      // mergeSort();
-      break;
-    case 1000000:
-      // radixSort();
-      break;
-    default:
-      printErrorBadSize(to_string(flags.size));
-      return 6;
+  // read input
+  long long startRead = getCurrentTimeMicros();
+  std::vector<int> data;
+  try {
+    data = readInput(flags.inputFile);
+  } catch (const std::exception &e) {
+    std::cerr << "Error reading file: " << e.what() << std::endl;
+    return 1;
+  }
+  long long endRead = getCurrentTimeMicros();
+
+  // we validate size read matches flag if required (optional)
+  if (data.size() != static_cast<size_t>(flags.size)) {
+    std::cerr << "Warning: Read " << data.size() << " elements, but flag specified " << flags.size << std::endl;
   }
 
-  // Optional Output Method
+  // sort
+  long long startSort = getCurrentTimeMicros();
+  if (flags.sortAlgorithm == "insertion" || flags.sortAlgorithm == "insertion_sort" || flags.sortAlgorithm == "insertionSort") {
+    insertionSort(data);
+  } else if (flags.sortAlgorithm == "shell" || flags.sortAlgorithm == "shellSort") {
+    shellSort(data);
+  } else if (flags.sortAlgorithm == "intro" || flags.sortAlgorithm == "introSort") {
+    introSort(data);
+  } else if (flags.sortAlgorithm == "merge" || flags.sortAlgorithm == "mergeSort") {
+    mergeSort(data);
+  } else if (flags.sortAlgorithm == "radix" || flags.sortAlgorithm == "radixSort") {
+    radixSort(data);
+  } else {
+    std::cerr << "Unknown algorithm: " << flags.sortAlgorithm << std::endl;
+    return 1;
+  }
+  long long endSort = getCurrentTimeMicros();
+
+  // we write output
+  long long startWrite = getCurrentTimeMicros();
   if (flags.hasOutputFile) {
-    // writeOutputFile(flags.outputFile)
+    try {
+      writeOutput(flags.outputFile, data);
+    } catch (const std::exception &e) {
+      std::cerr << "Error writing file: " << e.what() << std::endl;
+      return 1;
+    }
   } else if (flags.stdoutMode) {
-    // printStdout();
+    printArray(data);
   }
+  long long endWrite = getCurrentTimeMicros();
+  long long endTotal = getCurrentTimeMicros();
+
+  // print metrics (Standard Empirical Output)
+  std::cout << "Algorithm: " << flags.sortAlgorithm << std::endl;
+  std::cout << "Input File: " << flags.inputFile << std::endl;
+  std::cout << "Elements: " << data.size() << std::endl;
+  std::cout << "------------------------------------------------" << std::endl;
+  std::cout << "Read Time: " << (endRead - startRead) << " microseconds" << std::endl;
+  std::cout << "Sort Time (Computation): " << (endSort - startSort) << " microseconds" << std::endl;
+  std::cout << "Write Time: " << (endWrite - startWrite) << " microseconds" << std::endl;
+  std::cout << "Total Execution Time: " << (endTotal - startTotal) << " microseconds" << std::endl;
+  std::cout << "------------------------------------------------" << std::endl;
 
   return 0;
 }

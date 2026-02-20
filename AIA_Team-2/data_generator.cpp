@@ -34,6 +34,23 @@ void generateAndSave(const std::string &filename, int size,
     for (int i = 0; i < size; ++i) {
       data[i] = size - i;
     }
+  } else if (type == "half-sorted") {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 1000000);
+    for (int i = 0; i < size / 2; ++i) {
+      data[i] = i + 1;
+    }
+    for (int i = size / 2; i < size; ++i) {
+      data[i] = dis(gen);
+    }
+  } else if (type == "mixed") {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(-1000000, 1000000);
+    for (int i = 0; i < size; ++i) {
+      data[i] = dis(gen);
+    }
   }
 
   // Write to file
@@ -56,8 +73,8 @@ int main() {
   // Sizes: 100, 1000, 10000, 100000, 1000000
   std::vector<int> sizes = {100, 1000, 10000, 100000, 1000000};
 
-  // Types: random, asc, desc
-  std::vector<std::string> types = {"random", "asc", "desc"};
+  // Types: random, asc, desc, half-sorted, mixed
+  std::vector<std::string> types = {"random", "asc", "desc", "half-sorted", "mixed"};
 
   std::string outputDir = "data/";
   // Create directory if it doesn't exist (Windows command)
