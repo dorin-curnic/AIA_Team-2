@@ -1,7 +1,6 @@
 #include "radix.hpp"
 #include <vector>
 #include <cstdint>
-#include <algorithm> 
 
 void radixSort(std::vector<int>& arr) {
     if (arr.empty()) return;
@@ -52,7 +51,12 @@ void radixSort(std::vector<int>& arr) {
     lsd_radix(positives);
     // Sort negatives
     lsd_radix(negatives);
-    std::reverse(negatives.begin(), negatives.end());
+    int n_size = negatives.size();
+    for(int i = 0; i < n_size / 2; i++) {
+        int temp = negatives[i];
+        negatives[i] = negatives[n_size - 1 - i];
+        negatives[n_size - 1 - i] = temp;
+    }
 
     // Merge back: negatives first (as negative), then positives
     int idx = 0;

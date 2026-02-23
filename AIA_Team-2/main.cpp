@@ -15,6 +15,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <windows.h>
+#include <psapi.h>
 
 using namespace std;
 
@@ -89,6 +91,13 @@ int main(int argc, const char* argv[]) {
   long long endWrite = getCurrentTimeMicros();
   long long endTotal = getCurrentTimeMicros();
 
+  // Profiling Memory usage
+  PROCESS_MEMORY_COUNTERS pmc;
+  double memoryUsedMB = 0;
+  if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc))) {
+      memoryUsedMB = (double)pmc.PeakWorkingSetSize / (1024.0 * 1024.0);
+  }
+
   // print metrics (Standard Empirical Output)
   std::cout << "Algorithm: " << flags.sortAlgorithm << std::endl;
   std::cout << "Input File: " << flags.inputFile << std::endl;
@@ -96,6 +105,7 @@ int main(int argc, const char* argv[]) {
   std::cout << "------------------------------------------------" << std::endl;
   std::cout << "Read Time: " << (endRead - startRead) << " microseconds" << std::endl;
   std::cout << "Sort Time (Computation): " << (endSort - startSort) << " microseconds" << std::endl;
+  std::cout << "Peak Memory Consumption: " << memoryUsedMB << " MB" << std::endl;
   std::cout << "Write Time: " << (endWrite - startWrite) << " microseconds" << std::endl;
   std::cout << "Total Execution Time: " << (endTotal - startTotal) << " microseconds" << std::endl;
   std::cout << "------------------------------------------------" << std::endl;

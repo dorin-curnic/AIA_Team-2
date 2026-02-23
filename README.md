@@ -4,7 +4,7 @@
 This project benchmarks and empirically compares five distinct sorting algorithms across various dataset sizes and topologies. It includes customized optimizations for handling integer edge cases, negative numbers, and specific dataset sizes.
 
 ## Implemented Algorithms
-1. **Insertion Sort**: Fast for small datasets ($N \le 16$).
+1. **Insertion Sort**: Fast for small datasets ($N \le 100$).
 2. **Shell Sort**: Optimized using Ciura's geometric gap sequence.
 3. **Intro Sort**: Median-of-Three pivot strategy with $O(n \log n)$ tight bounds.
 4. **Merge Sort**: Stable sort featuring an Insertion Sort fallback sequence.
@@ -73,7 +73,7 @@ Compute metrics and print output to console:
 
 ### 1. Insertion Sort
 - **Mechanic**: Builds a sorted array one element at a time by shifting items.
-- **Best Use Case**: Very small datasets ($N \le 16$) or arrays that are already mostly sorted natively.
+- **Best Use Case**: Very small datasets ($N \le 100$) or arrays that are already mostly sorted natively.
 - **Complexity**: Time $O(N^2)$ Avg/Worst | Space $O(1)$ | Stable.
 
 ### 2. Shell Sort
@@ -87,7 +87,7 @@ Compute metrics and print output to console:
 - **Complexity**: Time $O(N \log N)$ Best/Worst/Avg | Space $O(\log N)$ | Unstable.
 
 ### 4. Merge Sort
-- **Mechanic**: Divides the array into halves, recursively sorts them, and merges them securely. Employs an Insertion Sort fallback for sub-arrays $\le 16$.
+- **Mechanic**: Divides the array into halves, recursively sorts them, and merges them securely. Employs an Insertion Sort fallback for sub-arrays $\le 100$.
 - **Best Use Case**: When strict stability and thoroughly predictable $O(N \log N)$ bounds are required across any topology.
 - **Complexity**: Time $O(N \log N)$ Best/Worst/Avg | Space $O(N)$ | Stable.
 

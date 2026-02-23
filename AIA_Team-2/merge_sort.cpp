@@ -23,6 +23,19 @@ void merge(std::vector<int>& arr, std::vector<int>& temp, int l, int mid, int r)
 
 void mergeSortAlg(std::vector<int>& arr, std::vector<int>& temp, int l, int r) {
     if (l < r) {
+        if (r - l + 1 <= 100) {
+            // Include insertion sort fallback here 
+            for (int i = l + 1; i <= r; i++) {
+                int key = arr[i];
+                int j = i - 1;
+                while (j >= l && arr[j] > key) {
+                    arr[j + 1] = arr[j];
+                    j--;
+                }
+                arr[j + 1] = key;
+            }
+            return;
+        }
         int mid = l + (r - l) / 2;
         // Sorting left and right
         mergeSortAlg(arr, temp, l, mid);
