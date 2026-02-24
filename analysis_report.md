@@ -118,7 +118,7 @@ right_half = mergeSort(A[mid..n])
 merge(left_half, right_half)
 ```
 3. **Complexity**: Best/Avg/Worst: $O(n \log n)$ | Space: $O(n)$. Stable.
-4. **Implementation notes**: Optimized to fall back to Insertion Sort on sub-arrays of size $\le 16$, circumventing recursive overhead inside deep bounds. Handled negative indexing inherently out-of-the-box.
+4. **Implementation notes**: Optimized space by utilizing an external temporary vector, and time of execution with $memcpy()$. Handled negative indexing inherently out-of-the-box.
 5. **Results + interpretation**:
 
 | Size | Random (us) | Ascending (us) | Descending (us) | Half-Sorted (us) | Mixed (us) |
