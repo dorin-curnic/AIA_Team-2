@@ -30,6 +30,12 @@ Compile the test data generator:
 g++ data_generator.cpp -o generator.exe
 ```
 
+### 3. Build the Competition Executable
+Compile the separate executable utilized specifically for the "Fastest Sorting Algorithm" competition, which runs Radix Sort natively on an absolute path search:
+```powershell
+g++ -O3 -std=c++17 comp.cpp radix.cpp utils.cpp -o comp.exe -lpsapi
+```
+
 ## Usage
 
 **Important:** Before running any executables, ensure you are in the correct directory:
@@ -67,6 +73,21 @@ Compute and print the metrics for a Mixed 10,000 array using Intro Sort, outputt
 Compute metrics and print output to console:
 ```powershell
 .\sorter.exe -a radix -s 1000 -i input_1000_random.txt -c
+```
+
+### 3. Run Competition Executable
+Run the pre-configured competition executable that actively searches your workspace recursively for `in.txt` (or whatever input file is passed) and provides absolute metrics:
+```powershell
+# Usage: .\comp.exe <input_file> [stdout|output_file]
+
+# Calculate metrics exclusively
+.\comp.exe input_1000000_random.txt
+
+# Calculate metrics AND save the sorted array elements
+.\comp.exe input_1000000_random.txt output.txt
+
+# Calculate metrics AND dynamically print directly standard output
+.\comp.exe input_1000000_random.txt stdout
 ```
 
 ## Algorithms
