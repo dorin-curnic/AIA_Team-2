@@ -15,8 +15,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <windows.h>
-#include <psapi.h>
 
 using namespace std;
 
@@ -92,11 +90,7 @@ int main(int argc, const char* argv[]) {
   long long endTotal = getCurrentTimeMicros();
 
   // Profiling Memory usage
-  PROCESS_MEMORY_COUNTERS pmc;
-  double memoryUsedMB = 0;
-  if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc))) {
-      memoryUsedMB = (double)pmc.PeakWorkingSetSize / (1024.0 * 1024.0);
-  }
+  double memoryUsedMB = (double)getPeakMemoryUsage() / (1024.0 * 1024.0);
 
   // print metrics (Standard Empirical Output)
   std::cout << "Algorithm: " << flags.sortAlgorithm << std::endl;
